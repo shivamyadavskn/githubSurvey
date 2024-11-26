@@ -28,31 +28,36 @@ const searchResults = [
   },
   // Add more sample results as needed
 ];
-const SearchResult = () => {
-  return (
-    <div className="container mx-auto py-4">
-      <div className="space-y-4">
-        {searchResults.map((result) => (
-          <div key={result.id} className="space-y-1">
-            <div className="flex items-baseline gap-2">
-              <h2 className="text-base">
-                <a href={result.url} className="hover:underline">
-                  {result.title}
-                </a>
-              </h2>
-              {result.url && (
-                <span className="text-sm text-gray-500">({result.url})</span>
-              )}
-            </div>
-            <div className="text-sm text-gray-600">
-              {result.points} points | {result.author} | {result.time} |{" "}
-              {result.comments} comments
-            </div>
-          </div>
-        ))}
-      </div>
+
+// ResultItem Component: Displays a single search result
+const ResultItem = (result) => (
+  <div key={result.id} className="space-y-1">
+    <div className="flex items-baseline gap-2">
+      <h2 className="text-base">
+        <a href={result.url} className="hover:underline">
+          {result.title}
+        </a>
+      </h2>
+      {result.url && (
+        <span className="text-sm text-gray-500">({result.url})</span>
+      )}
     </div>
-  );
-};
+    <div className="text-sm text-gray-600">
+      {result.points} points | {result.author} | {result.time} |{" "}
+      {result.comments} comments
+    </div>
+  </div>
+);
+
+// SearchResult Component: Maps over the results and renders ResultItem
+const SearchResult = (results) => (
+  <div className="container mx-auto py-4">
+    <div className="space-y-4">
+      {searchResults.map((result) => (
+        <ResultItem key={result.id} result={result} />
+      ))}
+    </div>
+  </div>
+);
 
 export default SearchResult;

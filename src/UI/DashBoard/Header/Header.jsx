@@ -3,7 +3,7 @@ import { Settings } from "lucide-react";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-const Header = () => {
+const Header = (query, onSearch ) => {
   return (
     <header className="bg-[#ff6600] p-2">
       <div className="container mx-auto flex items-center gap-4">
@@ -19,7 +19,8 @@ const Header = () => {
             <Input
               type="search"
               placeholder="Search stories..."
-              defaultValue="hello"
+              value={query}
+              onChange={(e) => onSearch(e.target.value)}
               className="pl-8"
             />
           </div>
