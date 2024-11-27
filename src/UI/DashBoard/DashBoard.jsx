@@ -31,7 +31,9 @@ export default function SearchInterface() {
           ? `&numericFilters=created_at_i>${getTimeRange(filters.timeRange)}`
           : "";
 
-      const url = `${sortUrl}?query=${query}&tags=${tags}${timeFilter}&page=${filters.page}`;
+      const url = `${sortUrl}?query=${encodeURIComponent(
+        query
+      )}&tags=${tags}${timeFilter}&page=${filters.page}`;
       const response = await fetch(url);
       const data = await response.json();
       setResults(data.hits || []);

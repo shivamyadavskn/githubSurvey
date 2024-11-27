@@ -1,7 +1,6 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import LoginPage from "./UI/Auth/Login";
 import DashBoard from "@/UI/DashBoard/DashBoard";
-import Register from "./UI/Auth/Register";
 
 const routing = [
   {
@@ -11,11 +10,7 @@ const routing = [
   {
     path: "/dashboard",
     element: <DashBoard />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
+  }
 ];
 
 function App() {
