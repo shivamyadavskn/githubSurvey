@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import moment from "moment";
+
 export default function Results({ results }) {
   return (
     <div className="container mx-auto py-4">
@@ -16,7 +19,9 @@ export default function Results({ results }) {
             </div>
             <div className="text-sm text-gray-600">
               {result.points} points | {result.author} |{" "}
-              {new Date(result.created_at).toLocaleString()} |{" "}
+              {
+                moment(result.created_at).format("MMMM Do, YYYY").toLocaleString()
+              }{" "} | {" "}
               {result.num_comments} comments
             </div>
           </div>

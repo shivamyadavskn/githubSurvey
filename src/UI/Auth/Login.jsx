@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,8 +11,9 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
@@ -20,14 +22,24 @@ export default function LoginPage() {
       return;
     }
 
-    try {
-      // Here you would typically make an API call to authenticate the user
-      // For demonstration, we'll just simulate a successful login
-      console.log("Logging in with:", email, password);
-      // router.push("/dashboard");
-    } catch (err) {
-      setError("Invalid email or password", err);
+    // Simple local storage authentication
+    if (email === "user@example.com" && password === "password") {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userEmail', email);
+      navigate('/dashboard');
+    } else {
+      setError("Invalid email or password");
     }
+  };
+
+  const handleDemoLogin = () => {
+    setEmail("user@example.com");
+    setPassword("password");
+    
+    // Simulate form submission
+    const event = new Event('submit', { bubbles: true, cancelable: true });
+    const form = document.querySelector('form');
+    form.dispatchEvent(event);
   };
 
   return (
@@ -75,15 +87,23 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div>
+          <div className="space-y-4">
             <Button type="submit" className="w-full">
               Sign in
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full"
+              onClick={handleDemoLogin}
+            >
+              Demo Login
             </Button>
           </div>
         </form>
         <div className="text-center">
           <p className="mt-2 text-sm text-gray-600">
-            Dont have an account?
+            Dont have an account?{" "}
             <Link
               to="/register"
               className="font-medium text-blue-600 hover:text-blue-500"

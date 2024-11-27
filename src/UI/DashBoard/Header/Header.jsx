@@ -2,19 +2,31 @@ import { Search, Settings } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Header({ query, handleSearch }) {
+  const [loggedIn, setloggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticated")) {
+      setloggedIn(true);
+      setUserEmail(localStorage.getItem("userEmail"));
+    }
+  }, []);
   return (
     <header className="bg-[#ff6600] p-2">
       <div className="container mx-auto flex items-center gap-4">
         <div className="flex items-center gap-2">
           <Link
-            to="dashboard"
+            to="/dashboard"
             className="flex h-8 w-8 items-center justify-center rounded bg-white text-[#ff6600] font-bold"
           >
             H
           </Link>
-          <span className="font-semibold text-white">Search Hacker News</span>
+          <span className="font-semibold text-white">
+            {!loggedIn ? "Search Hacker News" : userEmail}
+          </span>
         </div>
         <div className="flex-1 flex items-center gap-2">
           <div className="relative flex-1">
@@ -37,7 +49,7 @@ export default function Header({ query, handleSearch }) {
           size="icon"
           className="text-white hover:bg-[#ff7700]"
         >
-          <Settings className="h-5 w-5" />
+          {/* <Settings className="h-5 w-5" /> */}
         </Button>
       </div>
     </header>
