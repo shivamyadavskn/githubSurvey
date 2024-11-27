@@ -19,10 +19,10 @@ export default function SearchInterface() {
 
   useEffect(() => {
     const fetchResults = async () => {
-      const baseUrl = "http://hn.algolia.com/api/v1/search";
+      const baseUrl = "https://hn.algolia.com/api/v1/search";
       const sortUrl =
         filters.sortBy === "date"
-          ? "http://hn.algolia.com/api/v1/search_by_date"
+          ? "https://hn.algolia.com/api/v1/search_by_date"
           : baseUrl;
 
       const tags = filters.type === "stories" ? "story" : "comment";
