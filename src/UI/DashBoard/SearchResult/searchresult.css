@@ -1,0 +1,14 @@
+.ask-element {
+  font-size: larger;
+  margin: 2px;
+  font-weight: 500;
+}
+
+.ask-html {
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.ask-html p {
+  width: 100ch;
+}

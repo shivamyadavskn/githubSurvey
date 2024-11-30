@@ -16,6 +16,10 @@ export default function SearchInterface() {
   });
   const [results, setResults] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
+  const [responseTiming, setResponseTiming] = useState(0);
+  const[noofhits, setNooffilters] = useState(0);
+
+  const filterTypeList = ["stories", "comment", "ask_hn","poll","show_hn","launch_hn","job"];
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -25,7 +29,13 @@ export default function SearchInterface() {
           ? "https://hn.algolia.com/api/v1/search_by_date"
           : baseUrl;
 
-      const tags = filters.type === "stories" ? "story" : "comment";
+      const tags =
+        filters.type === "stories"
+          ? "story"
+          : filterTypeList.includes(filters.type)
+          ? filters.type
+          : null;
+
       const timeFilter =
         filters.timeRange !== "all"
           ? `&numericFilters=created_at_i>${getTimeRange(filters.timeRange)}`
@@ -34,8 +44,11 @@ export default function SearchInterface() {
       const url = `${sortUrl}?query=${encodeURIComponent(
         query
       )}&tags=${tags}${timeFilter}&page=${filters.page}`;
+
       const response = await fetch(url);
       const data = await response.json();
+      setResponseTiming(data?.processingTimeMS + data?.serverTimeMS);
+      setNooffilters(data.nbHits);
       setResults(data.hits || []);
       setTotalPages(data.nbPages || 0);
     };
@@ -87,8 +100,10 @@ export default function SearchInterface() {
         filters={filters}
         handleFilterChange={handleFilterChange}
         results={results}
+        responseTiming={responseTiming}
+        noofhits={noofhits}
       />
-      <Results results={results} />
+      <Results results={results} filtertypes={filters.type} />
       <Pagination
         page={filters.page}
         totalPages={totalPages}
