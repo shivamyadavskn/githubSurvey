@@ -4,8 +4,6 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
 } from "@/components/ui/pagination";
 
 export default function AdvancedPagination({
@@ -33,14 +31,18 @@ export default function AdvancedPagination({
     return Array.from({ length: endPage - startPage }, (_, i) => startPage + i);
   }, [page, totalPages]);
 
-  // Handle Previous - always go to first page
+  // Handle Previous - go to previous page
   const handlePrevious = () => {
-    handlePageChange(0);
+    if (page > 0) {
+      handlePageChange(page - 1);
+    }
   };
 
-  // Handle Next - always go to last page
+  // Handle Next - go to next page
   const handleNext = () => {
-    handlePageChange(totalPages - 1);
+    if (page < totalPages - 1) {
+      handlePageChange(page + 1);
+    }
   };
 
   return (
@@ -56,7 +58,10 @@ export default function AdvancedPagination({
                 handlePrevious();
               }}
             >
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-left"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevrons-left">
+                <path d="m11 17-5-5 5-5"/>
+                <path d="m18 17-5-5 5-5"/>
+              </svg>
             </PaginationLink>
           </PaginationItem>
         )}
@@ -87,7 +92,10 @@ export default function AdvancedPagination({
                 handleNext();
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-right"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevrons-right">
+                <path d="m6 17 5-5-5-5"/>
+                <path d="m13 17 5-5-5-5"/>
+              </svg>
             </PaginationLink>
           </PaginationItem>
         )}
